@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Science Exhibition Feedback</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f9;
+      text-align: center;
+      padding: 30px;
+    }
+    h1 {
+      color: #2c3e50;
+    }
+    .stars {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin: 20px 0;
+    }
+    .star {
+      font-size: 40px;
+      cursor: pointer;
+      color: gray;
+    }
+    .star.selected {
+      color: gold;
+    }
+    #submitBtn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 18px;
+      border: none;
+      background: #3498db;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    #submitBtn:hover {
+      background: #2980b9;
+    }
+    #thankYou {
+      display: none;
+      margin-top: 20px;
+      font-size: 20px;
+      color: green;
+      font-weight: bold;
+    }
+    #countBox {
+      margin-top: 30px;
+      font-size: 22px;
+      color: #2c3e50;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Science Exhibition Feedback</h1>
+  <p>Please rate our project:</p>
+
+  <div class="stars">
+    <span class="star" data-value="1">★</span>
+    <span class="star" data-value="2">★</span>
+    <span class="star" data-value="3">★</span>
+    <span class="star" data-value="4">★</span>
+    <span class="star" data-value="5">★</span>
+  </div>
+
+  <button id="submitBtn">Submit Feedback</button>
+
+  <div id="thankYou">✅ Thank you for your feedback!</div>
+
+  <div id="countBox">Good Reviews (4★ & 5★): <span id="goodCount">0</span></div>
+
+  <script>
+    let selectedRating = 0;
+    let goodReviews = 0;
+
+    const stars = document.querySelectorAll(".star");
+    const submitBtn = document.getElementById("submitBtn");
+    const thankYou = document.getElementById("thankYou");
+    const goodCount = document.getElementById("goodCount");
+
+    // Star click event
+    stars.forEach(star => {
+      star.addEventListener("click", () => {
+        selectedRating = star.getAttribute("data-value");
+        stars.forEach(s => s.classList.remove("selected"));
+        for (let i = 0; i < selectedRating; i++) {
+          stars[i].classList.add("selected");
+        }
+      });
+    });
+
+    // Submit feedback
+    submitBtn.addEventListener("click", () => {
+      if (selectedRating == 0) {
+        alert("Please select a star rating before submitting!");
+        return;
+      }
+
+      if (selectedRating >= 4) {
+        goodReviews++;
+        goodCount.textContent = goodReviews;
+      }
+
+      thankYou.style.display = "block";
+      setTimeout(() => {
+        thankYou.style.display = "none";
+      }, 3000);
+
+      // Reset stars
+      stars.forEach(s => s.classList.remove("selected"));
+      selectedRating = 0;
+    });
+  </script>
+</body>
+</html>
